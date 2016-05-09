@@ -68,7 +68,17 @@ public class GravityController : MonoBehaviour
 	{
 		Vector3 combinedForce = Vector3.zero;
 
-		// *** Add your source code here ***
+		//Find all planets which will apply gravity.
+		Object[] objs = Object.FindObjectsOfType(typeof(PlanetController));
+
+		foreach (Object obj in objs) 
+		{
+			PlanetController planet = (PlanetController)obj;
+
+			//Accumulate the force applied by this planet
+			Vector3 gravityForce = planet.GetGravityForce (position, mass);
+			combinedForce += gravityForce;
+		}
 
 		combinedForce = Vector3.ClampMagnitude(combinedForce, maxGravityMagnitude - 1);
 		return combinedForce;
