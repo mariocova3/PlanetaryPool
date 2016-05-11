@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Our manager for loading levels and tracking level progress.
@@ -110,17 +109,7 @@ public class LevelManager : MonoBehaviour
 
 	public void Update()
 	{
-		//Update the score
-		if (scoring) 
-		{
-			//Score is time-based, 1000 points per second.
-			score += (int)(Time.deltaTime * 1000);
-		}
-
-		//Update the rank based on the score
-		lastRank = GetRank();
-
-		UIManager.Instance.UpdateHUD (currentLevelID, score, lastRank);
+		// *** Add your source code here ***
 	}
 
 	/// <summary>

@@ -56,21 +56,7 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector3 initialVelocity = Vector3.zero;
 
-		//Get the mouse position in screen coordinates
-		Vector3 mousePos = Input.mousePosition;
-
-		//Set distance from camera, equal to the distance the
-		//camera is from the stage
-		mousePos.z = Camera.main.transform.position.y;
-
-		//Convert screen coordinate to world coordinate at the
-		//set camera distance
-		mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-
-		initialVelocity = maxSpeed * (mousePos - rigidBodyComp.position).normalized;
-
-		float launchTime = Mathf.Min (Time.time - downTime, timeForMaxPower);
-		initialVelocity = initialVelocity * (launchTime / timeForMaxPower);
+		// *** Add your source code here ***
 
 		return initialVelocity;
 	}
@@ -82,7 +68,6 @@ public class PlayerController : MonoBehaviour
 		
 		//Initial position is our starting position
 		positions[0] = rigidBodyComp.position;
-<<<<<<< HEAD
 		
 		//Calculate initial velocity
 		velocities[0] = CalculateInitialVelocity();
@@ -104,29 +89,6 @@ public class PlayerController : MonoBehaviour
 			
 			//This is done in FixedUpdate(), we need to do it for every simulated frame
 			velocities[i] = Vector3.ClampMagnitude(velocities[i], maxSpeed);
-=======
-
-		//Calculate initial velocity
-		velocities[0] = CalculateInitialVelocity();
-
-		//Reproduce physics engine position updates
-		for (int i = 1; i < UIManager.maxPositionDraws; ++i) 
-		{
-			Vector3 appliedForce = GravityController.CalculateGravity (positions [i - 1], rigidBodyComp.mass);
-
-			//F = m*a, so a = F/m
-			Vector3 appliedAcceleration = appliedForce / rigidBodyComp.mass;
-
-			//Unity physics engine applies the new velocity and calculates the new
-			//position based on it
-
-			//v(1) = v(0) + a*t
-			velocities [i] = velocities [i - 1] + appliedAcceleration * Time.fixedDeltaTime;
-			positions [i] = positions [i - 1] + (velocities [i] * Time.fixedDeltaTime);
-
-			//This is done in Fixed Update(), we need to do it for every simulated frae
-			velocities [i] = Vector3.ClampMagnitude (velocities [i], maxSpeed);
->>>>>>> origin/master
 		}
 
 		// Pass our calculated positions to the UIManager to draw a path

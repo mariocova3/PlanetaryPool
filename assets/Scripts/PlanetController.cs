@@ -40,18 +40,8 @@ public class PlanetController : MonoBehaviour
 	public Vector3 GetGravityForce(Vector3 position, float mass)
 	{
 		Vector3 forceOfGravity = Vector3.zero;
-		//Get the square of the distance (r^2)
-		float distSqr = (rigidBody.position-position).sqrMagnitude;
 
-		//Calculate the direction of force
-		Vector3 direction = (rigidBody.position-position).normalized;
-
-		//Calculate the magnitude of gravity to apply
-		//F = G*m(1)*m(2)/r^2
-		float force = (gravitationalConstant*mass*rigidBody.mass)/distSqr;
-
-		//Multiply by direction to get the vector for gravity
-		forceOfGravity = direction * force;
+		// *** Add your source code here ***
 
 		return forceOfGravity;
 	}
