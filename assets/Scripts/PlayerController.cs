@@ -56,7 +56,19 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector3 initialVelocity = Vector3.zero;
 
-		// *** Add your source code here ***
+		//Get the mouse position in screen coordinates
+		Vector3 mousePos = Input.mousePosition;
+
+		//Set distance from camera, equal to the distance the camera is from the stage
+		mousePos.z = Camera.main.transform.position.y;
+
+		//Convert screen coordinate to world coordinate at the set camera distance
+		mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+		initialVelocity = maxSpeed * (mousePos - rigidBodyComp.position).normalized;
+
+		float launchTime = Mathf.Min (Time.time - downTime, timeForMaxPower);
+		initialVelocity = initialVelocity * (launchTime / timeForMaxPower);
 
 		return initialVelocity;
 	}
