@@ -66,7 +66,30 @@ public class PlayerController : MonoBehaviour
 		Vector3[] positions = new Vector3[UIManager.maxPositionDraws];
 		Vector3[] velocities = new Vector3[UIManager.maxPositionDraws];
 		
-		// *** Add your source code here ***
+		//Initial position is our starting position
+		positions[0] = rigidBodyComp.position;
+		
+		//Calculate initial velocity
+		velocities[0] = CalculateInitialVelocity();
+		
+		//Reproduce physics engine position updates
+		for(int i = 1; i < UIManager.maxPositionDraws; ++i)
+		{
+			Vector3 appliedForce = GravityController.CalculateGravity(positions[i-1], rigidbBodyComp.mass);
+			
+			//F = m*a, so a = F/m
+			Vector3 appliedAcceleration = appliedForce/rigidBodyComp.mass;
+			
+			//Unity physics engine applies the new velocity and calculates the new
+			//position based on it
+			
+			//v(1) = v(0)+ a*t
+			velocities[i] = velocities[i-1] + appliedAcceleration * Time.fixedDeltaTime;
+			positions[i] = positions[i-1] + (velocities[i] * Time.fixedDeltaTime);
+			
+			//This is done in FixedUpdate(), we need to do it for every simulated frame
+			velocities[i] = Vector3.ClampMagnitude(velocities[i], maxSpeed);
+		}
 
 		// Pass our calculated positions to the UIManager to draw a path
 		UIManager.Instance.SetExpectedPath(positions);

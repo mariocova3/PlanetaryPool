@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// The class that controls gameplay flow.
@@ -111,7 +112,7 @@ public class GameplayManager : MonoBehaviour
 	public void OnRestart()
 	{
 		// Reload the current scene
-		Application.LoadLevel(Application.loadedLevel);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
 	/// <summary>

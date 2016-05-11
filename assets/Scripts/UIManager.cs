@@ -137,7 +137,25 @@ public class UIManager : MonoBehaviour
 		// Cache the current color for restoring later
 		Color guiColor = GUI.color;
 
-		// *** Add your source code here ***
+		//Loop through positions to draw position indicators
+		int numPositions = Mathf.Min(pathPositions.Length, maxPositionDraws);
+		for(int i = 0; i < numPositions; i += 2)
+		{
+			//Transform the expected position to a screen position
+			Vector3 screenPos = Camera.main.WorldToScreenPoint(pathPositions[i]);
+			screenPos.y = Screen.height - screenPos.y;	//Y dimension is inverted
+			
+			//Calculate a rectangular position for the texture.
+			Rect texturePos = new Rect(screenPos.x - pathTexture.width/2, screenPos.y - pathTexture.height/2, pathTexture.width, pathTexture.height);
+			
+			//Fade the indicator out based on how far along the path the position
+			//is.  This is done by setting the alpha in the GUI's global color.
+			float alpha = 1.0F - (float)i/(float)maxPositionDraws;
+			Color tempColor = GUI.color;
+			tempColor.a = alpha;
+			GUI.color = tempColor;
+			GUI.DrawTexture(texturePos, pathTexture);
+		}
 
 		// Move our offscreen indicators to the appropriate positions
 		SetIndicatorPosition(playerIndicator, playerPosition);
